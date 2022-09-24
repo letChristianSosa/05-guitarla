@@ -1,24 +1,18 @@
 import Layout from "../components/Layout";
-import Entrada from "../components/Entrada";
-import styles from "../styles/Blog.module.css";
+import ListadoBlog from "../components/ListadoBlog";
 
 const Blog = ({ entradas }) => {
   return (
     <Layout pagina="Blog">
       <main className="contenedor">
-        <h2 className="heading">Blog</h2>
-        <div className={styles.blog}>
-          {entradas.map((entrada) => (
-            <Entrada key={entrada.id} entrada={entrada} />
-          ))}
-        </div>
+        <ListadoBlog entradas={entradas} />
       </main>
     </Layout>
   );
 };
 
 export async function getServerSideProps() {
-  const url = "http://localhost:1337/blogs";
+  const url = "http://localhost:1337/blogs?_sort=created_at:desc";
   const respuesta = await fetch(url);
   const entradas = await respuesta.json();
   return {
